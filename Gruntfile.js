@@ -34,6 +34,9 @@ module.exports = function(grunt) {
       },
       gruntfile: {
         src: 'Gruntfile.js'
+      },
+      tasks: {
+        src: 'tasks/**/*.js'
       }
     },
     qunit: {
@@ -56,6 +59,10 @@ module.exports = function(grunt) {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
+      },
+      tasks: {
+        files: '<%= jshint.tasks.src %>',
+        tasks: ['jshint:tasks', 'update']
       }
     },
     connect: {
@@ -78,7 +85,8 @@ module.exports = function(grunt) {
   });
 
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+  grunt.loadTasks('tasks');
   grunt.registerTask('default', ['jshint']);
-  grunt.registerTask('start', ['jshint', 'connect:livereload', 'watch']);
+  grunt.registerTask('start', ['jshint', 'update', 'connect:livereload', 'watch']);
 
 };
