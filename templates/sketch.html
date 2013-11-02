@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= name %></title><% _.each(css, function (f) { %>
+  <title><%= name %>: <%= sketch_title %></title><% _.each(css, function (f) { %>
   <link rel="stylesheet" type="text/css" href="<%= f %>"><% }) %>
 </head>
 <body>
-
-  <h1><%= name %></h1>
-
-  <ul><% _.each(sketches, function (sketch) { %>
-    <li><a href="<%= sketch.name %>.html"><%= sketch.title %></a></li><% }) %>
-  </ul>
+  <h1><%= name %>: <%= sketch_title %></h1>
+  <div id="<%= sketch_name %>" class="sketch"></div>
 <% _.each(js, function (f) { %>
   <script type="text/javascript" src="<%= f %>"></script><% }) %>
-
 </body>
 </html>

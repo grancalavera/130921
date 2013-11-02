@@ -11,6 +11,17 @@ var mountFolder = function (connect, dir) {
 
 module.exports = function(grunt) {
   grunt.initConfig({
+    '130921': {
+      dev: {
+        css: [
+          'normalize-css/normalize.css'
+        ],
+        js: [
+          'jquery/jquery.js',
+          'modernizr/modernizr.js'
+        ]
+      }
+    },
     jshint: {
       options: {
         curly: true,
@@ -37,14 +48,14 @@ module.exports = function(grunt) {
       },
       tasks: {
         src: 'tasks/**/*.js'
+      },
+      scripts: {
+        src: 'www/scripts/**/*.js'
       }
-    },
-    qunit: {
-      files: ['test/**/*.html']
     },
     watch: {
       options: {
-        nospawn: true,
+        spawn: false,
         livereload: true,
       },
       livereload: {
@@ -61,8 +72,32 @@ module.exports = function(grunt) {
         tasks: ['jshint:gruntfile']
       },
       tasks: {
+        options: {
+          spawn: true
+        },
         files: '<%= jshint.tasks.src %>',
-        tasks: ['jshint:tasks', 'update']
+        tasks: ['jshint:tasks']
+      },
+      compass: {
+        files: 'www/styles/**/*.scss',
+        tasks: ['compass:dev']
+      },
+      scripts: {
+        files: '<%= jshint.scripts.src %>',
+        tasks: ['jshint:scripts']
+      }
+    },
+    compass: {
+      dev: {
+        options: {
+          sassDir: 'www/styles',
+          cssDir: 'www/css',
+          imagesDir: 'images',
+          generatedImagesDir: 'images/generated',
+          fontsDir: 'fonts',
+          relativeAssets: true,
+          lineComments: false,
+        }
       }
     },
     connect: {

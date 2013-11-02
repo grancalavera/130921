@@ -1,0 +1,9 @@
+{
+  "sketches": {
+    "triangle": {
+      "name": "triangle",
+      "description": "A single SVG triangle",
+      "title": "Triangle"
+    }
+  }
+}
