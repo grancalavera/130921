@@ -8,10 +8,54 @@
  */
 @import "common";
 
+$fold-r: 35.5deg;
+$s-sml: 150px;
+$s-lrg: 250px;
+
+.sketch {
+  @include perspective-origin(50% 50%);
+  @include perspective(500px);
+  // @include transform-style(preserve-3d);
+}
+
 .pyramid {
   position: absolute;
+  @include transform-style(preserve-3d);
+  @include transform-origin(center, center, -$s-sml / 2);
+  @include transform(rotateY(45deg));
 }
 
 .triangle {
   position: absolute;
+  @include transform-origin(left, bottom, 0);
+}
+
+.triangle.front {
+  @include transform(rotateX($fold-r));
+}
+
+.triangle.right {
+  @include transform(translateX($s-sml) rotateY(90deg) rotateX($fold-r));
+}
+
+.triangle.back {
+  @include transform(translateZ(-$s-sml) rotateX(-$fold-r));
+}
+
+.triangle.left {
+  @include transform(rotateY(90deg) rotateX(-$fold-r));
+}
+
+@media #{$bp-beyond-mobile} {
+  .triangle.right {
+    @include transform(translateX($s-lrg) rotateY(90deg) rotateX($fold-r));
+  }
+
+  .triangle.back {
+    @include transform(translateZ(-$s-lrg) rotateX(-$fold-r));
+  }
+
+  .triangle.left {
+    @include transform(rotateY(90deg) rotateX(-$fold-r));
+  }
 }
