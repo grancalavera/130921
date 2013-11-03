@@ -15,7 +15,7 @@
     beyondMobile: 500
   };
 
-  var colors = lib.colors = {
+  lib.colors = {
     darkest: '#000000',
     dark: '#212121',
     light: '#929292',
@@ -62,10 +62,47 @@
    * Draws an equilateral triangle. The triangle's bounding box will be
    * defined by the height and the base of the triangle.
    */
-  lib.triangle = function (size) {
+  var triangle = lib.triangle = function (size) {
     var half_s = size / 2;
     var h = Math.sqrt(size * size - half_s * half_s);
     return polygon(pos.M(half_s, 0), pos.L(size, h), pos.L(0, h));
+  };
+
+  /*
+   * One triangle inside another triangle wrapped inside a <div> element
+   * wrapped inside a jQuery function.
+   */
+  lib.$triangle = function (size, className) {
+    var $t = $('<div class="triangle">');
+    var p = Raphael($t[0], size, size);
+    $t.paper = p;
+
+    function make_t (s) {
+      var t = p.path(triangle(s)).attr('stroke', 'none');
+      t.size = s;
+      return t;
+    }
+
+    $t.addClass(className);
+    $t.css({
+      width: size,
+      height: size,
+      display: 'inline-block'
+    });
+
+    $t.t1 = make_t(size);
+    $t.t2 = make_t(size * 0.9);
+
+    var h = $t.t1.getBBox().height;
+    var base = size - h;
+    var x = (size - $t.t2.getBBox().width) / 2;
+    var y = (base + x * 2) - x * 0.85;
+
+    $t.t1.transform(pos.t(0, base));
+    $t.t2.transform(pos.t(x, y));
+    $t.baseOffset= base;
+
+    return $t;
   };
 
   updateState();

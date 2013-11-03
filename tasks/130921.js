@@ -82,7 +82,7 @@ module.exports = function (grunt) {
     _(project.sketches).chain().map(function (sketch) {
       var c = _.extend({}, context, {
         'sketch_name': sketch.name,
-        'sketch_desc': sketch.desc,
+        'sketch_description': sketch.description,
         'sketch_title': sketch.title,
       });
       c.css = _.clone(c.css);

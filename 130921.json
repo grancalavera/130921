@@ -4,6 +4,11 @@
       "name": "triangle",
       "description": "A single SVG triangle",
       "title": "Triangle"
+    },
+    "four-triangles": {
+      "name": "four-triangles",
+      "description": "Four SVG triangles",
+      "title": "Four Triangles"
     }
   }
 }
