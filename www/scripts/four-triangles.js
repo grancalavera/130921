@@ -9,6 +9,7 @@
 (function (lib) {
 
   var $el = $('#four-triangles');
+  $el.addClass('debug');
   var margin = 4;
   var faces = ['front', 'right', 'back', 'left'];
   var triangles = [];
