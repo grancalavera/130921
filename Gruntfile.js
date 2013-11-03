@@ -14,11 +14,14 @@ module.exports = function(grunt) {
     '130921': {
       dev: {
         css: [
-          'normalize-css/normalize.css'
+          'normalize-css/normalize.css',
+          'css/130921.css',
         ],
         js: [
           'jquery/jquery.js',
-          'modernizr/modernizr.js'
+          'modernizr/modernizr.js',
+          'raphael/raphael.js',
+          'scripts/lib.js',
         ]
       }
     },
@@ -28,7 +31,6 @@ module.exports = function(grunt) {
         eqeqeq: true,
         immed: true,
         latedef: true,
-        newcap: true,
         noarg: true,
         sub: true,
         undef: true,
@@ -40,7 +42,9 @@ module.exports = function(grunt) {
         globals: {
           $: false,
           jQuery: false,
-          Modernizr: false
+          Modernizr: false,
+          console: false,
+          Raphael: false,
         }
       },
       gruntfile: {
@@ -122,6 +126,6 @@ module.exports = function(grunt) {
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
   grunt.loadTasks('tasks');
   grunt.registerTask('default', ['jshint']);
-  grunt.registerTask('start', ['jshint', 'update', 'connect:livereload', 'watch']);
+  grunt.registerTask('start', ['update', 'connect:livereload', 'watch']);
 
 };

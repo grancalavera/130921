@@ -2,12 +2,24 @@
  * 130921
  * Another davidope cover
  * Double Pyramid
- * Two single pyramids reflected on the base
  * Leon Coto
  * styles/_common.scss
  */
 @import "compass/css3";
 
-.sketch {
+$s-side: 320px;
+$s-larger-side: 500px;
 
+$c-darkest: #000000;
+$c-dark: #212121;
+$c-light: #929292;
+$c-lighter: #ffffff;
+
+$bp-beyond-mobile: "screen and (min-width: 501px)";
+
+@mixin square($side: $s-side) {
+  width: $side;
+  height: $side;
+  margin-top: $side / 2 * -1;
+  margin-left: $side / 2 * -1;
 }

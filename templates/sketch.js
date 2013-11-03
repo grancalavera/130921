@@ -4,7 +4,7 @@
  * <%= sketch.title %>
  * <%= sketch.description %>
  * <%= author %>
- * scripts/<%= sketch.name %>.scss
+ * scripts/<%= sketch.name %>.js
  */
 (function (lib) {
   var $el = $('#<%= sketch.name %>');
