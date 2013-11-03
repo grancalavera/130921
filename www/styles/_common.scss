@@ -15,6 +15,19 @@ $c-dark: #212121;
 $c-light: #929292;
 $c-lighter: #ffffff;
 
+// faces
+
+$c-top-front: #fb5228;
+$c-top-right: #5e207e;
+$c-top-back: #0ddcce;
+$c-top-left: #fbd503;
+
+$c-bottom-front: #fb5228;
+$c-bottom-right: #5e207e;
+$c-bottom-back: #0ddcce;
+$c-bottom-left: #fbd503;
+
+
 $bp-beyond-mobile: "screen and (min-width: 501px)";
 
 @mixin square($side: $s-side) {

@@ -13,7 +13,7 @@
   function updateState (state) {
     size = state.size;
     $el.html(state.name + ', ' + size + 'px');
-  };
+  }
 
   lib.$body.on('change:state', function (ev, state) {
     updateState(state);

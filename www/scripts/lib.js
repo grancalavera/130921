@@ -16,10 +16,23 @@
   };
 
   lib.colors = {
+
+    // Theme
     darkest: '#000000',
     dark: '#212121',
     light: '#929292',
-    lighter: '#ffffff'
+    lighter: '#ffffff',
+
+    // Faces
+    'top-front': '#fb5228',
+    'top-right': '#5e207e',
+    'top-back': '#0ddcce',
+    'top-left': '#fbd503',
+    'bottom-front': '#fb5228',
+    'bottom-right': '#5e207e',
+    'bottom-back': '#0ddcce',
+    'bottom-left': '#fbd503',
+
   };
 
   var slice = Array.prototype.slice;
@@ -72,7 +85,7 @@
    * One triangle inside another triangle wrapped inside a <div> element
    * wrapped inside a jQuery function.
    */
-  lib.$triangle = function (size, className) {
+  var $triangle = lib.$triangle = function (size, className) {
     var $t = $('<div class="triangle">');
     var p = Raphael($t[0], size, size);
     $t.paper = p;
@@ -86,12 +99,11 @@
     $t.addClass(className);
     $t.css({
       width: size,
-      height: size,
-      display: 'inline-block'
+      height: size
     });
 
     $t.t1 = make_t(size);
-    $t.t2 = make_t(size * 0.9);
+    $t.t2 = make_t(size * 0.95);
 
     var h = $t.t1.getBBox().height;
     var base = size - h;
@@ -103,6 +115,42 @@
     $t.baseOffset= base;
 
     return $t;
+  };
+
+  lib.$pyramid = function (size, className) {
+    var faces = ['front', 'right', 'back', 'left'];
+    var triangles = [];
+    var $p = $('<div class="pyramid">');
+
+    $p.css({
+      width: size,
+      height: size
+    });
+
+    $p.addClass(className);
+
+    $p.clear = function () {
+      triangles.forEach(function ($t) {
+        $t.paper.clear();
+        $t.remove();
+      });
+      $p.remove();
+      triangles = [];
+    };
+
+    triangles = faces.map(function (face) {
+      var c = lib.colors[className + '-' + face];
+      var $t = $triangle(size, face);
+      $t.t1.attr({ fill: lib.colors.darkest });
+      $t.t2.attr({ fill: c });
+      $p.append($t);
+      return $t;
+    });
+
+    $p.bbox = triangles[0].t1.getBBox();
+    $p.baseOffset = triangles[0].baseOffset;
+
+    return $p;
   };
 
   updateState();
