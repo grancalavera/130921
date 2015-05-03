@@ -3,19 +3,16 @@
   "version": "0.1.0",
   "description": "Another davidope cover",
   "main": "Gruntfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Leon Coto",
   "license": "BSD-2-Clause",
+  "dependencies": {},
+  "scripts": {
+    "jshint": "./node_modules/jshint/bin/jshint",
+    "browser-sync": "./node_modules/browser-sync/bin/browser-sync.js start --server --files *.html,*.css",
+    "test": "npm run jshint"
+  },
   "devDependencies": {
-    "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-compass": "~0.6.0",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.7.0",
-    "matchdep": "~0.3.0",
-    "connect-livereload": "~0.3.0",
-    "grunt-contrib-connect": "~0.5.0"
+    "browser-sync": "^2.6.9",
+    "jshint": "^2.7.0"
   }
 }
