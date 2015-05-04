@@ -1,6 +1,16 @@
+* {
+  box-sizing: border-box;
+}
 body {
-  background-color: black;
   font-family: sans-serif;
-  color: #eeeeee;
 }
 
+#main-container {
+  margin: 0 auto;
+  border: 1px solid #eeeeee;
+}
+
+.canvas {
+  width: 500px;
+  height: 500px;
+}
