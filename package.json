@@ -5,9 +5,12 @@
   "main": "Gruntfile.js",
   "author": "Leon Coto",
   "license": "BSD-2-Clause",
-  "dependencies": {},
+  "dependencies": {
+    "onecolor": "^2.5.0",
+    "three": "^0.71.0"
+  },
   "scripts": {
-    "jshint": "./node_modules/jshint/bin/jshint",
+    "jshint": "./node_modules/jshint/bin/jshint main.js",
     "browser-sync": "./node_modules/browser-sync/bin/browser-sync.js start --server --files *.html,*.css,*.js",
     "test": "npm run jshint"
   },
