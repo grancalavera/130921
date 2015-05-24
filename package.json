@@ -6,9 +6,7 @@
   "author": "Leon Coto",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "onecolor": "^2.5.0",
-    "three": "^0.71.0",
-    "underscore": "^1.8.3"
+    "three": "^0.71.0"
   },
   "scripts": {
     "jshint": "./node_modules/jshint/bin/jshint main.js",

@@ -89,7 +89,6 @@
 
     // Custom Globals
     "globals"       : {
-        "THREE": false,
-        "_": false
+        "THREE": false
     }
 }

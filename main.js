@@ -5,26 +5,27 @@
   var scene = new THREE.Scene()
     , renderer = getRenderer()
     , viewSize = 500
+    , margin = 50
+    , rows = 20
+    , cols = 20
+    , size = 9
+    , grid = getGrid(rows, cols)
     , camera = getCamera(viewSize)
+    , cellSize = (viewSize - margin * 2) / Math.max(cols, rows)
+    , rotationIncrement = Math.PI * 2 / 15
 
   document.getElementById('main-container').appendChild(renderer.domElement)
   populateScene(scene)
-
   render()
 
   function populateScene(scene) {
-    var size = 9
-      , margin = 50
-      , cols = 20
-      , rows = 20
-      , cellSize = (viewSize - margin * 2) / Math.max(cols, rows)
-      , grid = getGrid(rows, cols)
-      , rotationIncrement = Math.PI * 2 / 15
+    var index
+      , object
+      , coords
 
-    _.range(0, rows * cols).forEach(function(index) {
-
-      var object = getObject(size)
-        , coords = grid.getCoords(index)
+    for (index = 0; index < rows * cols; index += 1) {
+      object = getObject(size)
+      coords = grid.getCoords(index)
 
       object.position.setX(
           coords.x * cellSize
@@ -40,18 +41,28 @@
         - cellSize / 2
         )
 
-      object.rotation.x = coords.x * rotationIncrement
-      object.rotation.z = coords.y * rotationIncrement
+      object.rotation.x =
+          coords.x * rotationIncrement
+
+      object.rotation.y =
+          coords.y * rotationIncrement
+
+      object.rotation.z =
+          coords.y * rotationIncrement
 
       scene.add(object)
-    })
+    }
   }
 
   function render() {
-    var speed = 0.05
     requestAnimationFrame(render)
     renderer.render(scene, camera)
-    scene.children.forEach(function(object) {
+    animate()
+  }
+
+  function animate() {
+    var speed = 0.08
+    scene.children.forEach(function(object, index) {
       object.rotation.y += speed
     })
   }
