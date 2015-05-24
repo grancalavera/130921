@@ -2,16 +2,22 @@
   box-sizing: border-box;
 }
 body {
+  background-color: #151718;
   font-family: sans-serif;
-  font-size: 8px;
+}
+
+a, a:active {
+  color: #333333;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #666666;
 }
 
 #main-container {
   margin: 0 auto;
   background-color: black;
-}
-
-.canvas {
   width: 500px;
   height: 500px;
 }
