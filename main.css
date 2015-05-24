@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   background-color: #151718;
   font-family: sans-serif;
@@ -15,7 +16,7 @@ a:hover {
   color: #666666;
 }
 
-#main-container {
+.container {
   margin: 0 auto;
   background-color: black;
   width: 500px;
