@@ -2,11 +2,10 @@
 
   "use strict";
 
-  var t = THREE
-    , scene = new t.Scene()
+  var scene = new THREE.Scene()
     , renderer = getRenderer()
-    , camera = getCamera()
     , viewSize = 500
+    , camera = getCamera(viewSize)
 
   document.getElementById('main-container').appendChild(renderer.domElement)
   populateScene(scene)
@@ -14,10 +13,10 @@
   render()
 
   function populateScene(scene) {
-    var size = 11
+    var size = 9
       , margin = 50
-      , cols = 30
-      , rows = 30
+      , cols = 20
+      , rows = 20
       , cellSize = (viewSize - margin * 2) / Math.max(cols, rows)
       , grid = getGrid(rows, cols)
       , rotationIncrement = Math.PI * 2 / 15
@@ -29,16 +28,16 @@
 
       object.position.setX(
           coords.x * cellSize
-        + margin
         - viewSize / 2
+        + margin
         + cellSize / 2
         )
 
       object.position.setY(
-          coords.y * cellSize
-        + margin
-        - viewSize / 2
-        + cellSize / 2
+          coords.y * cellSize * -1
+        + viewSize / 2
+        - margin
+        - cellSize / 2
         )
 
       object.rotation.x = coords.x * rotationIncrement
@@ -53,23 +52,21 @@
     requestAnimationFrame(render)
     renderer.render(scene, camera)
     scene.children.forEach(function(object) {
-      object.rotation.y -= speed
-      object.rotation.z += speed
+      object.rotation.y += speed
     })
   }
 
   function getRenderer() {
-    var r = new t.WebGLRenderer()
+    var r = new THREE.WebGLRenderer()
     r.setSize(500, 500)
     return r
   }
 
-  function getCamera() {
+  function getCamera(viewSize) {
     var aspectRatio = 1
-      , viewSize = 500
-      , nearFar = 500
+      , nearFar = viewSize
 
-    return new t.OrthographicCamera(
+    return new THREE.OrthographicCamera(
           -aspectRatio * viewSize / 2
         , aspectRatio * viewSize / 2
         , viewSize / 2
@@ -80,53 +77,64 @@
   }
 
   function getObject(size) {
-    return new t.Mesh(getGeometry(size), getMaterial())
+    return THREE.SceneUtils.createMultiMaterialObject(
+        getGeometry(size)
+      , getMaterials()
+      )
   }
 
-  function getMaterial() {
-    return new t.MeshBasicMaterial({ vertexColors: t.FaceColors })
+  function getMaterials() {
+    var fill = new THREE.MeshBasicMaterial({
+          vertexColors: THREE.VertexColors
+      })
+      , stroke = new THREE.MeshBasicMaterial({
+          color: 0
+        , wireframe: true
+        , transparent: true
+      })
+    return [ fill, stroke ]
   }
 
   function getGeometry(size) {
-    var red1 = 0xe52c21
+    var geometry = new THREE.Geometry()
+      , red1 = 0xe52c21
       , red2 = 0xfb5220
       , yellow1 = 0xffea00
       , yellow2 = 0xfdb70f
       , purple = 0x5e207e
       , cyan = 0x0feada
       , green = 0x52e988
-      , geometry = new t.Geometry()
       , x = size * 0.8
-      , y = size * 5
+      , y = size * 1
       , z = size * 0.8
 
     geometry.vertices.push(
-        new t.Vector3(-x, 0, z)
-      , new t.Vector3(x, 0, z)
-      , new t.Vector3(0, y, 0)
-      , new t.Vector3(x, 0, -z)
-      , new t.Vector3(-x, 0, -z)
-      , new t.Vector3(0, -y, 0)
+        new THREE.Vector3(-x, 0, z)
+      , new THREE.Vector3(x, 0, z)
+      , new THREE.Vector3(0, y, 0)
+      , new THREE.Vector3(x, 0, -z)
+      , new THREE.Vector3(-x, 0, -z)
+      , new THREE.Vector3(0, -y, 0)
       )
 
     geometry.faces.push(
-        getFaceWithColor(0, 1, 2, red1)
-      , getFaceWithColor(0, 5, 1, red2)
-      , getFaceWithColor(1, 3, 2, purple)
-      , getFaceWithColor(1, 5, 3, cyan)
-      , getFaceWithColor(2, 3, 4, cyan)
-      , getFaceWithColor(4, 3, 5, green)
-      , getFaceWithColor(0, 2, 4, yellow1)
-      , getFaceWithColor(0, 4, 5, yellow2)
+        getFace(0, 1, 2, red1)
+      , getFace(0, 5, 1, red2)
+      , getFace(1, 3, 2, purple)
+      , getFace(1, 5, 3, cyan)
+      , getFace(2, 3, 4, cyan)
+      , getFace(4, 3, 5, green)
+      , getFace(0, 2, 4, yellow1)
+      , getFace(0, 4, 5, yellow2)
       )
 
     return geometry
   }
 
-  function getFaceWithColor(v1, v2, v3, color) {
-    var f = new t.Face3(v1, v2, v3)
-    f.color.setHex(color)
-    return f
+  function getFace(v1, v2, v3, color) {
+    var face = new THREE.Face3(v1, v2, v3)
+    face.color.setHex(color)
+    return face
   }
 
   function getGrid(rows, cols) {
@@ -134,15 +142,10 @@
     return { getCoords: getCoords }
 
     function getCoords(n) {
-      return { x: x(n), y: y(n) }
-    }
-
-    function x(n) {
-      return n % cols
-    }
-
-    function y(n) {
-      return Math.floor(n / cols)
+      return {
+          x: n % cols
+        , y: Math.floor(n / cols)
+      }
     }
   }
 
