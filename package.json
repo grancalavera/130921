@@ -6,6 +6,7 @@
   "author": "Leon Coto",
   "license": "BSD-2-Clause",
   "dependencies": {
+    "stats.js": "^1.0.0",
     "three": "^0.71.0"
   },
   "scripts": {

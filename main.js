@@ -3,6 +3,7 @@
   "use strict";
 
   var scene = new THREE.Scene()
+    , stats = getStats()
     , renderer = getRenderer()
     , viewSize = 500
     , margin = 50
@@ -15,8 +16,44 @@
     , rotationIncrement = Math.PI * 2 / 15
 
   document.getElementById('main-container').appendChild(renderer.domElement)
+  document.body.appendChild(stats.domElement)
   populateScene(scene)
-  render()
+  loop(now())
+
+  function loop(lastTime) {
+    var currentTime = now()
+
+    stats.begin()
+    update(currentTime - lastTime)
+    render()
+    stats.end()
+
+    requestAnimationFrame(function() {
+      loop(currentTime)
+    })
+  }
+
+  function update(elapsedTime) {
+    var revolutions = getRevolutions(1)
+      , period = 1000
+      , angle = revolutions / period * elapsedTime
+
+    scene.children.forEach(function(object, index) {
+      object.rotation.y += angle
+    })
+  }
+
+  function render() {
+    renderer.render(scene, camera)
+  }
+
+  function now() {
+    return Date.now()
+  }
+
+  function getRevolutions(count) {
+    return Math.PI * 2 * count
+  }
 
   function populateScene(scene) {
     var index
@@ -43,6 +80,7 @@
 
       object.rotation.x =
           coords.x * rotationIncrement
+        + Math.PI / 8
 
       object.rotation.y =
           coords.y * rotationIncrement
@@ -52,19 +90,6 @@
 
       scene.add(object)
     }
-  }
-
-  function render() {
-    requestAnimationFrame(render)
-    renderer.render(scene, camera)
-    animate()
-  }
-
-  function animate() {
-    var speed = 0.08
-    scene.children.forEach(function(object, index) {
-      object.rotation.y += speed
-    })
   }
 
   function getRenderer() {
@@ -158,6 +183,15 @@
         , y: Math.floor(n / cols)
       }
     }
+  }
+
+  function getStats() {
+    var stats = new Stats()
+    stats.setMode(0)
+    stats.domElement.style.position = 'absolute'
+    stats.domElement.style.right = 0
+    stats.domElement.style.top = 0
+    return stats
   }
 
 })()
