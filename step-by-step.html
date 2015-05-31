@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>130921</title>
+  <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+  <h1><a href="http://dvdp.tumblr.com/post/61799632866/130921" target="_blank">130921</a></h1>
+  <div id="main-container" class="container">
+    <img>
+  </div>
+  <p><a href="/">back</a></p>
+  <script>
+(function() {
+  var img = document.querySelector('#main-container img')
+    , src = [
+      'exploded/tmp-00.gif'
+    , 'exploded/tmp-01.gif'
+    , 'exploded/tmp-02.gif'
+    , 'exploded/tmp-03.gif'
+    , 'exploded/tmp-04.gif'
+    , 'exploded/tmp-05.gif'
+    , 'exploded/tmp-06.gif'
+    , 'exploded/tmp-07.gif'
+    , 'exploded/tmp-08.gif'
+    , 'exploded/tmp-09.gif'
+    , 'exploded/tmp-10.gif'
+    , 'exploded/tmp-11.gif'
+    , 'exploded/tmp-12.gif'
+    , 'exploded/tmp-13.gif'
+    , 'exploded/tmp-14.gif'
+    , 'exploded/tmp-15.gif'
+    , 'exploded/tmp-16.gif'
+    , 'exploded/tmp-17.gif'
+    , 'exploded/tmp-18.gif'
+    , 'exploded/tmp-19.gif'
+    , 'exploded/tmp-20.gif'
+    ]
+    , wait = 1000
+
+  function changeImage(i) {
+    img.setAttribute('src', src[i])
+    setTimeout(function() {
+      changeImage((i + 1) % src.length)
+    }, wait)
+  }
+
+  changeImage(0)
+
+})()
+  </script>
+</body>
+</html>
