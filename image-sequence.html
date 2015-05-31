@@ -9,10 +9,14 @@
   <div id="main-container" class="container">
     <img>
   </div>
-  <p><a href="/">back</a></p>
+  <p><input id="speed" type="range" min="40" max="1000" step="50" value="50"></p>
+  <p><input id="pause" type="checkbox"></p>
+  <p><a href="index.html">webgl</a></p>
+
   <script>
-(function() {
-  var img = document.querySelector('#main-container img')
+  var img = document.querySelector('img')
+    , wait = document.getElementById('speed')
+    , pause = document.getElementById('pause')
     , src = [
       'exploded/tmp-00.gif'
     , 'exploded/tmp-01.gif'
@@ -36,18 +40,17 @@
     , 'exploded/tmp-19.gif'
     , 'exploded/tmp-20.gif'
     ]
-    , wait = 1000
 
-  function changeImage(i) {
+  update(0)
+
+  function update(i) {
     img.setAttribute('src', src[i])
     setTimeout(function() {
-      changeImage((i + 1) % src.length)
-    }, wait)
+      if (pause.checked) return update(i)
+      update((i + 1) % src.length)
+    }, wait.value)
   }
-
-  changeImage(0)
-
-})()
   </script>
+
 </body>
 </html>

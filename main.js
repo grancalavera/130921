@@ -13,6 +13,8 @@
     , grid = getGrid(rows, cols)
     , camera = getCamera(viewSize)
     , cellSize = (viewSize - margin * 2) / Math.max(cols, rows)
+    , speed = document.getElementById('speed')
+    , pause = document.getElementById('pause')
 
   document.getElementById('main-container').appendChild(renderer.domElement)
   document.body.appendChild(stats.domElement)
@@ -23,7 +25,7 @@
     var currentTime = now()
 
     stats.begin()
-    update(currentTime - lastTime)
+    if(!isPaused()) update(currentTime - lastTime)
     render()
     stats.end()
 
@@ -32,8 +34,12 @@
     })
   }
 
+  function isPaused() {
+    return pause.checked
+  }
+
   function update(elapsedTime) {
-    var angle = revolutions(1) / 1000 * elapsedTime
+    var angle = revolutions(1) / speed.value * elapsedTime
 
     scene.children.forEach(function(object, index) {
       var r = rotationMatrix(

@@ -5,6 +5,7 @@
 body {
   background-color: #151718;
   font-family: sans-serif;
+  color: #333333;
 }
 
 a, a:active {
@@ -22,4 +23,10 @@ a:hover {
   width: 500px;
   height: 500px;
   padding: 0;
+}
+
+.center {
+  margin-right: 0;
+  margin-left: 0;
+  text-align: center;
 }
