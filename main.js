@@ -36,18 +36,12 @@
 
   function update(elapsedTime) {
     var angle = revolutions(1) / speed.value * elapsedTime
-
     scene.children.forEach(function(object) {
       var r = rotationMatrix(
           object.rotation.x
         , object.rotation.y
         , object.rotation.z
-        )
-        , r1 = new THREE.Matrix4()
-
-      r1.makeRotationY(angle)
-      r.multiply(r1)
-
+        ).multiply(makeRotation('Y', angle))
       object.setRotationFromMatrix(r)
     })
   }
@@ -101,18 +95,17 @@
   }
 
   function rotationMatrix(x, y, z) {
-    var rx = new THREE.Matrix4()
-      , ry = new THREE.Matrix4()
-      , rz = new THREE.Matrix4()
-      , r = new THREE.Matrix4()
+    var r = new THREE.Matrix4()
+    r.multiply(makeRotation('X', x))
+    r.multiply(makeRotation('Y', y))
+    r.multiply(makeRotation('Z', z))
+    return r
 
-    rx.makeRotationX(x)
-    ry.makeRotationY(y)
-    rz.makeRotationZ(z)
+  }
 
-    r.multiplyMatrices(rx, ry)
-    r.multiply(rz)
-
+  function makeRotation(axis, angle) {
+    var r = new THREE.Matrix4()
+    r['makeRotation' + axis](angle)
     return r
   }
 
