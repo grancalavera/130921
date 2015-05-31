@@ -25,7 +25,7 @@
     var currentTime = now()
 
     stats.begin()
-    if(!isPaused()) update(currentTime - lastTime)
+    if(!pause.checked) update(currentTime - lastTime)
     render()
     stats.end()
 
@@ -34,14 +34,10 @@
     })
   }
 
-  function isPaused() {
-    return pause.checked
-  }
-
   function update(elapsedTime) {
     var angle = revolutions(1) / speed.value * elapsedTime
 
-    scene.children.forEach(function(object, index) {
+    scene.children.forEach(function(object) {
       var r = rotationMatrix(
           object.rotation.x
         , object.rotation.y
