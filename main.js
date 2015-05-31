@@ -13,7 +13,6 @@
     , grid = getGrid(rows, cols)
     , camera = getCamera(viewSize)
     , cellSize = (viewSize - margin * 2) / Math.max(cols, rows)
-    , rotationIncrement = Math.PI * 2 / 15
 
   document.getElementById('main-container').appendChild(renderer.domElement)
   document.body.appendChild(stats.domElement)
@@ -34,12 +33,20 @@
   }
 
   function update(elapsedTime) {
-    var revolutions = getRevolutions(1)
-      , period = 1000
-      , angle = revolutions / period * elapsedTime
+    var angle = revolutions(1) / 1000 * elapsedTime
 
     scene.children.forEach(function(object, index) {
-      object.rotation.y += angle
+      var r = rotationMatrix(
+          object.rotation.x
+        , object.rotation.y
+        , object.rotation.z
+        )
+        , r1 = new THREE.Matrix4()
+
+      r1.makeRotationY(angle)
+      r.multiply(r1)
+
+      object.setRotationFromMatrix(r)
     })
   }
 
@@ -51,7 +58,7 @@
     return Date.now()
   }
 
-  function getRevolutions(count) {
+  function revolutions(count) {
     return Math.PI * 2 * count
   }
 
@@ -59,6 +66,7 @@
     var index
       , object
       , coords
+      , r
 
     for (index = 0; index < rows * cols; index += 1) {
       object = getObject(size)
@@ -78,18 +86,32 @@
         - cellSize / 2
         )
 
-      object.rotation.x =
-          coords.x * rotationIncrement
-        + Math.PI / 8
+      r = rotationMatrix(
+        coords.x * revolutions(1 / 15)
+      , revolutions(1 / 19)
+      , coords.y * revolutions(1 / 15)
+      )
 
-      object.rotation.y =
-          coords.y * rotationIncrement
-
-      object.rotation.z =
-          coords.y * rotationIncrement
+      object.setRotationFromMatrix(r)
 
       scene.add(object)
     }
+  }
+
+  function rotationMatrix(x, y, z) {
+    var rx = new THREE.Matrix4()
+      , ry = new THREE.Matrix4()
+      , rz = new THREE.Matrix4()
+      , r = new THREE.Matrix4()
+
+    rx.makeRotationX(x)
+    ry.makeRotationY(y)
+    rz.makeRotationZ(z)
+
+    r.multiplyMatrices(rx, ry)
+    r.multiply(rz)
+
+    return r
   }
 
   function getRenderer() {
