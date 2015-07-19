@@ -11,7 +11,7 @@
   },
   "scripts": {
     "jshint": "./node_modules/jshint/bin/jshint main.js",
-    "browser-sync": "./node_modules/browser-sync/bin/browser-sync.js start --server --files *.html,*.css,*.js",
+    "start": "./node_modules/browser-sync/bin/browser-sync.js start --server --files *.html,*.css,*.js",
     "test": "npm run jshint"
   },
   "devDependencies": {
