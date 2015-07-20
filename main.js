@@ -2,14 +2,14 @@
 
   "use strict";
 
-  var scene = new THREE.Scene()
-    , stats = getStats()
-    , renderer = getRenderer()
-    , viewSize = 500
+  var viewSize = 500
     , margin = 50
     , rows = 20
     , cols = 20
     , size = 9
+    , scene = new THREE.Scene()
+    , stats = getStats()
+    , renderer = getRenderer(viewSize)
     , grid = getGrid(rows, cols)
     , camera = getCamera(viewSize)
     , cellSize = (viewSize - margin * 2) / Math.max(cols, rows)
@@ -109,9 +109,9 @@
     return r
   }
 
-  function getRenderer() {
+  function getRenderer(size) {
     var r = new THREE.WebGLRenderer()
-    r.setSize(500, 500)
+    r.setSize(size, size)
     return r
   }
 
